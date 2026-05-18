@@ -42,41 +42,39 @@ st.markdown("""
         color: white !important;
         font-weight: normal;
     }
-    /* Sidebar info - strong white */
+    /* Sidebar info - now BLACK */
     .sidebar-info {
-        background: rgba(255,255,255,0.1);
+        background: rgba(255,255,255,0.9);
         padding: 12px;
         border-radius: 15px;
         margin-top: 20px;
         margin-bottom: 20px;
     }
-    .sidebar-info p, .sidebar-info div, .sidebar-info strong {
-        color: white !important;
+    .sidebar-info p, .sidebar-info div, .sidebar-info strong, .sidebar-info a {
+        color: black !important;
         font-weight: bold !important;
         margin: 5px 0;
     }
     .sidebar-info a {
-        color: #ffd966 !important;
-        font-weight: bold !important;
-        text-decoration: none;
-    }
-    .sidebar-info a:hover {
         text-decoration: underline;
     }
-    /* Pricing box - strong white */
+    .sidebar-info a:hover {
+        color: #e94560 !important;
+    }
+    /* Pricing box - now BLACK */
     .pricing-box {
-        background: rgba(0,0,0,0.3);
+        background: rgba(255,255,255,0.9);
         padding: 10px;
         border-radius: 12px;
         margin-top: 15px;
         text-align: center;
     }
     .pricing-box h4, .pricing-box p, .pricing-box li {
-        color: white !important;
+        color: black !important;
         font-weight: bold !important;
     }
     .pricing-box h4 {
-        color: #ffd966;
+        color: #1e2a3a;
         margin: 0 0 8px 0;
         font-weight: bold;
     }
@@ -129,7 +127,7 @@ else:  # Upload Image
     else:
         bg_color = "#2c3e50"  # fallback
 
-# ========== SIDEBAR PERSONAL INFO & PRICING (STRONG WHITE) ==========
+# ========== SIDEBAR PERSONAL INFO & PRICING (NOW BLACK TEXT) ==========
 st.sidebar.markdown("---")
 st.sidebar.markdown('<div class="sidebar-info">', unsafe_allow_html=True)
 st.sidebar.markdown("**🌐 GlobalInternet.py**")
@@ -140,7 +138,7 @@ st.sidebar.markdown("**✉️ Email:** [deslandes78@gmail.com](mailto:deslandes7
 st.sidebar.markdown("**🌍 Website:** [globalinternetsitepy-abh7v6tnmskxxnuplrdcgk.streamlit.app/](https://globalinternetsitepy-abh7v6tnmskxxnuplrdcgk.streamlit.app/)")
 st.sidebar.markdown('</div>', unsafe_allow_html=True)
 
-# Pricing section (strong white)
+# Pricing section (black text)
 st.sidebar.markdown('<div class="pricing-box">', unsafe_allow_html=True)
 st.sidebar.markdown("<h4>💰 Online Pricing (Competitive)</h4>", unsafe_allow_html=True)
 st.sidebar.markdown("• **Basic ID Photo:** $4.99 / photo")
