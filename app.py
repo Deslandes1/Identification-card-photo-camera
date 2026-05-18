@@ -42,41 +42,44 @@ st.markdown("""
         color: white !important;
         font-weight: normal;
     }
-    /* Sidebar info - now BLACK */
+    /* Sidebar info - SOLID WHITE background + STRONG BLACK text */
     .sidebar-info {
-        background: rgba(255,255,255,0.9);
+        background: white !important;
         padding: 12px;
         border-radius: 15px;
         margin-top: 20px;
         margin-bottom: 20px;
+        border: 1px solid #ddd;
     }
     .sidebar-info p, .sidebar-info div, .sidebar-info strong, .sidebar-info a {
         color: black !important;
-        font-weight: bold !important;
+        font-weight: 900 !important;
         margin: 5px 0;
     }
     .sidebar-info a {
         text-decoration: underline;
+        color: #1e3c72 !important;
     }
     .sidebar-info a:hover {
         color: #e94560 !important;
     }
-    /* Pricing box - now BLACK */
+    /* Pricing box - SOLID WHITE background + STRONG BLACK text */
     .pricing-box {
-        background: rgba(255,255,255,0.9);
+        background: white !important;
         padding: 10px;
         border-radius: 12px;
         margin-top: 15px;
         text-align: center;
+        border: 1px solid #ccc;
     }
     .pricing-box h4, .pricing-box p, .pricing-box li {
         color: black !important;
-        font-weight: bold !important;
+        font-weight: 900 !important;
     }
     .pricing-box h4 {
         color: #1e2a3a;
         margin: 0 0 8px 0;
-        font-weight: bold;
+        font-weight: 900;
     }
     .pricing-box p {
         font-size: 0.9rem;
@@ -116,18 +119,18 @@ elif bg_option == "🌅 Gradient":
         bg_gradient = "linear-gradient(135deg, #ff4b2b, #ff416c)"
     else:
         bg_gradient = "linear-gradient(135deg, #1f4037, #99f2c8)"
-    bg_color = bg_gradient  # store as gradient string
+    bg_color = bg_gradient
 
 else:  # Upload Image
     uploaded_bg = st.sidebar.file_uploader("Upload a background image", type=["jpg", "jpeg", "png"])
     if uploaded_bg:
         bg_image_bytes = uploaded_bg.read()
-        bg_color = "image"  # special marker
+        bg_color = "image"
         st.sidebar.image(uploaded_bg, caption="Your background", use_container_width=True)
     else:
-        bg_color = "#2c3e50"  # fallback
+        bg_color = "#2c3e50"
 
-# ========== SIDEBAR PERSONAL INFO & PRICING (NOW BLACK TEXT) ==========
+# ========== SIDEBAR PERSONAL INFO & PRICING (STRONG BLACK ON WHITE) ==========
 st.sidebar.markdown("---")
 st.sidebar.markdown('<div class="sidebar-info">', unsafe_allow_html=True)
 st.sidebar.markdown("**🌐 GlobalInternet.py**")
@@ -138,7 +141,6 @@ st.sidebar.markdown("**✉️ Email:** [deslandes78@gmail.com](mailto:deslandes7
 st.sidebar.markdown("**🌍 Website:** [globalinternetsitepy-abh7v6tnmskxxnuplrdcgk.streamlit.app/](https://globalinternetsitepy-abh7v6tnmskxxnuplrdcgk.streamlit.app/)")
 st.sidebar.markdown('</div>', unsafe_allow_html=True)
 
-# Pricing section (black text)
 st.sidebar.markdown('<div class="pricing-box">', unsafe_allow_html=True)
 st.sidebar.markdown("<h4>💰 Online Pricing (Competitive)</h4>", unsafe_allow_html=True)
 st.sidebar.markdown("• **Basic ID Photo:** $4.99 / photo")
@@ -150,21 +152,15 @@ st.sidebar.markdown("</div>", unsafe_allow_html=True)
 
 # Camera input
 camera_photo = st.camera_input("📷 Take a photo", key="id_photo")
-
-# White text message below camera
 st.markdown('<p class="white-text">Click the camera above to take a photo first.</p>', unsafe_allow_html=True)
 
-# HTML/JS component for background replacement (client-side)
+# HTML/JS component for background replacement
 def background_replacement_js(original_image_b64, bg_type, bg_value):
-    """
-    Returns HTML + JavaScript that replaces background using MediaPipe Selfie Segmentation.
-    """
-    # For gradients or solid colors, we pass CSS style; for image we pass data URL
     if bg_type == "🌈 Solid Color":
         bg_style = f"background-color: {bg_value};"
     elif bg_type == "🌅 Gradient":
         bg_style = f"background: {bg_value};"
-    else:  # image
+    else:
         bg_style = f"background-image: url('{bg_value}'); background-size: cover; background-position: center;"
     
     html_code = f"""
@@ -201,28 +197,21 @@ def background_replacement_js(original_image_b64, bg_type, bg_value):
             originalImage.onload = () => {{
                 canvas.width = originalImage.width;
                 canvas.height = originalImage.height;
-                // Initialize MediaPipe
                 selfieSegmentation = new SelfieSegmentation({{ locateFile: (file) => `https://cdn.jsdelivr.net/npm/@mediapipe/selfie_segmentation/${{file}}` }});
                 selfieSegmentation.setOptions({{ modelSelection: 1, selfieMode: false }});
                 selfieSegmentation.onResults(onResults);
-                // Process the image
                 selfieSegmentation.send({{ image: originalImage }});
             }};
             
             function onResults(results) {{
-                // Draw original image
                 ctx.drawImage(results.image, 0, 0, canvas.width, canvas.height);
-                // Apply mask
                 ctx.globalCompositeOperation = 'destination-in';
                 ctx.drawImage(results.segmentationMask, 0, 0, canvas.width, canvas.height);
                 ctx.globalCompositeOperation = 'source-over';
-                // Now draw background underneath (by placing a new background canvas)
-                // Simpler: create a temporary canvas with background
                 const tempCanvas = document.createElement('canvas');
                 tempCanvas.width = canvas.width;
                 tempCanvas.height = canvas.height;
                 const tempCtx = tempCanvas.getContext('2d');
-                // Fill with background style
                 if (bgStyle.includes('background-color')) {{
                     const color = bgStyle.match(/background-color:\\s*([^;]+)/)[1];
                     tempCtx.fillStyle = color;
@@ -234,14 +223,12 @@ def background_replacement_js(original_image_b64, bg_type, bg_value):
                     bgImg.src = imgUrl;
                     bgImg.onload = () => {{
                         tempCtx.drawImage(bgImg, 0, 0, canvas.width, canvas.height);
-                        // composite: draw person on top
                         tempCtx.drawImage(canvas, 0, 0);
                         ctx.clearRect(0, 0, canvas.width, canvas.height);
                         ctx.drawImage(tempCanvas, 0, 0);
                     }};
                     return;
                 }} else {{
-                    // gradient
                     tempCtx.fillStyle = '#ddd';
                     tempCtx.fillRect(0, 0, canvas.width, canvas.height);
                 }}
@@ -263,25 +250,21 @@ def background_replacement_js(original_image_b64, bg_type, bg_value):
     return html_code
 
 if camera_photo is not None:
-    # Convert camera image to base64 for the JS component
     pil_img = Image.open(camera_photo)
-    # Resize to reasonable size (max 800px)
     pil_img.thumbnail((800, 800))
     buffered = io.BytesIO()
     pil_img.save(buffered, format="PNG")
     img_b64 = base64.b64encode(buffered.getvalue()).decode()
     data_url = f"data:image/png;base64,{img_b64}"
     
-    # Determine background type for JS
     if bg_option == "🌈 Solid Color":
         js_bg_type = "🌈 Solid Color"
         js_bg_value = bg_color
     elif bg_option == "🌅 Gradient":
         js_bg_type = "🌅 Gradient"
         js_bg_value = bg_gradient if 'bg_gradient' in locals() else "linear-gradient(135deg, #667eea, #764ba2)"
-    else:  # Upload image
+    else:
         if uploaded_bg:
-            # Convert uploaded background to data URL
             bg_b64 = base64.b64encode(bg_image_bytes).decode()
             js_bg_value = f"data:image/png;base64,{bg_b64}"
             js_bg_type = "image"
@@ -289,7 +272,6 @@ if camera_photo is not None:
             js_bg_type = "🌈 Solid Color"
             js_bg_value = "#2c3e50"
     
-    # Embed the component
     st.markdown("### ✨ Preview & Capture")
     st.components.v1.html(
         background_replacement_js(data_url, js_bg_type, js_bg_value),
@@ -300,7 +282,6 @@ if camera_photo is not None:
 else:
     st.info("👆 Click the camera above to take a photo first.")
 
-# Footer with colorful message
 st.markdown("---")
 st.markdown(
     "<p style='text-align: center; color: #ffd966;'>🎨 Made with vibrant colors | Perfect ID photos in seconds</p>",
