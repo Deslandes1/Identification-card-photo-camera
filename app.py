@@ -7,7 +7,7 @@ import time
 
 st.set_page_config(page_title="🎨 ID Photo Studio", page_icon="📸", layout="wide")
 
-# ========== COLORFUL CSS ==========
+# ========== COLORFUL CSS (only for overall app, not interfering with sidebar) ==========
 st.markdown("""
 <style>
     .stApp {
@@ -19,7 +19,7 @@ st.markdown("""
     h1, h2, h3, .stMarkdown, .stText {
         color: white !important;
     }
-    /* Strong black text for sidebar title */
+    /* Title in sidebar – black bold */
     .black-strong {
         color: black !important;
         font-weight: 900 !important;
@@ -42,56 +42,13 @@ st.markdown("""
         color: white !important;
         font-weight: normal;
     }
-    /* Sidebar info - SOLID WHITE background + STRONG BLACK text */
-    .sidebar-info {
-        background: white !important;
-        padding: 12px;
-        border-radius: 15px;
-        margin-top: 20px;
-        margin-bottom: 20px;
-        border: 1px solid #ddd;
-    }
-    .sidebar-info p, .sidebar-info div, .sidebar-info strong, .sidebar-info a {
-        color: black !important;
-        font-weight: 900 !important;
-        margin: 5px 0;
-    }
-    .sidebar-info a {
-        text-decoration: underline;
-        color: #1e3c72 !important;
-    }
-    .sidebar-info a:hover {
-        color: #e94560 !important;
-    }
-    /* Pricing box - SOLID WHITE background + STRONG BLACK text */
-    .pricing-box {
-        background: white !important;
-        padding: 10px;
-        border-radius: 12px;
-        margin-top: 15px;
-        text-align: center;
-        border: 1px solid #ccc;
-    }
-    .pricing-box h4, .pricing-box p, .pricing-box li {
-        color: black !important;
-        font-weight: 900 !important;
-    }
-    .pricing-box h4 {
-        color: #1e2a3a;
-        margin: 0 0 8px 0;
-        font-weight: 900;
-    }
-    .pricing-box p {
-        font-size: 0.9rem;
-        margin: 3px 0;
-    }
 </style>
 """, unsafe_allow_html=True)
 
 st.title("📸 ID Photo Studio – Perfect ID Photos")
 st.markdown("Take a photo, then **instantly replace the background** with a colorful style of your choice.")
 
-# Sidebar with background options and personal info
+# ========== SIDEBAR BACKGROUND OPTIONS ==========
 st.sidebar.markdown('<div class="black-strong">🎨 Background Gallery</div>', unsafe_allow_html=True)
 
 bg_option = st.sidebar.radio(
@@ -100,6 +57,8 @@ bg_option = st.sidebar.radio(
 )
 
 bg_color = "#3498db"  # default sky blue
+bg_image_bytes = None
+
 if bg_option == "🌈 Solid Color":
     bg_color = st.sidebar.color_picker("Pick a color", "#3498db")
     st.sidebar.markdown(f'<div style="background:{bg_color}; height:50px; border-radius:10px;"></div>', unsafe_allow_html=True)
@@ -130,31 +89,42 @@ else:  # Upload Image
     else:
         bg_color = "#2c3e50"
 
-# ========== SIDEBAR PERSONAL INFO & PRICING (STRONG BLACK ON WHITE) ==========
+# ========== SIDEBAR PERSONAL INFO – FORCED BLACK BOLD ON WHITE ==========
 st.sidebar.markdown("---")
-st.sidebar.markdown('<div class="sidebar-info">', unsafe_allow_html=True)
-st.sidebar.markdown("**🌐 GlobalInternet.py**")
-st.sidebar.markdown("**👨‍💻 Software Engineer in Chief**")
-st.sidebar.markdown("**Gesner Deslandes**")
-st.sidebar.markdown("**📞 Phone:** +509 4738-5663")
-st.sidebar.markdown("**✉️ Email:** [deslandes78@gmail.com](mailto:deslandes78@gmail.com)")
-st.sidebar.markdown("**🌍 Website:** [globalinternetsitepy-abh7v6tnmskxxnuplrdcgk.streamlit.app/](https://globalinternetsitepy-abh7v6tnmskxxnuplrdcgk.streamlit.app/)")
-st.sidebar.markdown('</div>', unsafe_allow_html=True)
+st.sidebar.markdown(
+    """
+    <div style="background:white; padding:12px; border-radius:15px; margin:10px 0; border:1px solid #aaa;">
+        <p style="color:black; font-weight:bold; margin:5px 0;">🌐 <strong>GlobalInternet.py</strong></p>
+        <p style="color:black; font-weight:bold; margin:5px 0;">👨‍💻 <strong>Software Engineer in Chief</strong></p>
+        <p style="color:black; font-weight:bold; margin:5px 0;"><strong>Gesner Deslandes</strong></p>
+        <p style="color:black; font-weight:bold; margin:5px 0;">📞 <strong>Phone:</strong> +509 4738-5663</p>
+        <p style="color:black; font-weight:bold; margin:5px 0;">✉️ <strong>Email:</strong> <a href="mailto:deslandes78@gmail.com" style="color:#1e3c72; font-weight:bold;">deslandes78@gmail.com</a></p>
+        <p style="color:black; font-weight:bold; margin:5px 0;">🌍 <strong>Website:</strong> <a href="https://globalinternetsitepy-abh7v6tnmskxxnuplrdcgk.streamlit.app/" style="color:#1e3c72; font-weight:bold;">globalinternetsitepy</a></p>
+    </div>
+    """,
+    unsafe_allow_html=True
+)
 
-st.sidebar.markdown('<div class="pricing-box">', unsafe_allow_html=True)
-st.sidebar.markdown("<h4>💰 Online Pricing (Competitive)</h4>", unsafe_allow_html=True)
-st.sidebar.markdown("• **Basic ID Photo:** $4.99 / photo")
-st.sidebar.markdown("• **Background Removal Only:** $2.99 / photo")
-st.sidebar.markdown("• **Bulk Discount (10+ photos):** 30% OFF")
-st.sidebar.markdown("• **Custom Background Design:** $9.99 / project")
-st.sidebar.markdown("• **Enterprise API Access:** Contact for quote")
-st.sidebar.markdown("</div>", unsafe_allow_html=True)
+# ========== PRICING – FORCED BLACK BOLD ON WHITE ==========
+st.sidebar.markdown(
+    """
+    <div style="background:white; padding:10px; border-radius:12px; margin-top:10px; text-align:center; border:1px solid #aaa;">
+        <h4 style="color:#1e2a3a; font-weight:900; margin:0 0 8px 0;">💰 Online Pricing (Competitive)</h4>
+        <p style="color:black; font-weight:bold; margin:3px 0;">• <strong>Basic ID Photo:</strong> $4.99 / photo</p>
+        <p style="color:black; font-weight:bold; margin:3px 0;">• <strong>Background Removal Only:</strong> $2.99 / photo</p>
+        <p style="color:black; font-weight:bold; margin:3px 0;">• <strong>Bulk Discount (10+ photos):</strong> 30% OFF</p>
+        <p style="color:black; font-weight:bold; margin:3px 0;">• <strong>Custom Background Design:</strong> $9.99 / project</p>
+        <p style="color:black; font-weight:bold; margin:3px 0;">• <strong>Enterprise API Access:</strong> Contact for quote</p>
+    </div>
+    """,
+    unsafe_allow_html=True
+)
 
-# Camera input
+# ========== CAMERA INPUT ==========
 camera_photo = st.camera_input("📷 Take a photo", key="id_photo")
 st.markdown('<p class="white-text">Click the camera above to take a photo first.</p>', unsafe_allow_html=True)
 
-# HTML/JS component for background replacement
+# ========== BACKGROUND REPLACEMENT COMPONENT (unchanged) ==========
 def background_replacement_js(original_image_b64, bg_type, bg_value):
     if bg_type == "🌈 Solid Color":
         bg_style = f"background-color: {bg_value};"
@@ -197,7 +167,9 @@ def background_replacement_js(original_image_b64, bg_type, bg_value):
             originalImage.onload = () => {{
                 canvas.width = originalImage.width;
                 canvas.height = originalImage.height;
-                selfieSegmentation = new SelfieSegmentation({{ locateFile: (file) => `https://cdn.jsdelivr.net/npm/@mediapipe/selfie_segmentation/${{file}}` }});
+                selfieSegmentation = new SelfieSegmentation({{
+                    locateFile: (file) => `https://cdn.jsdelivr.net/npm/@mediapipe/selfie_segmentation/${{file}}`
+                }});
                 selfieSegmentation.setOptions({{ modelSelection: 1, selfieMode: false }});
                 selfieSegmentation.onResults(onResults);
                 selfieSegmentation.send({{ image: originalImage }});
@@ -264,7 +236,7 @@ if camera_photo is not None:
         js_bg_type = "🌅 Gradient"
         js_bg_value = bg_gradient if 'bg_gradient' in locals() else "linear-gradient(135deg, #667eea, #764ba2)"
     else:
-        if uploaded_bg:
+        if bg_image_bytes:
             bg_b64 = base64.b64encode(bg_image_bytes).decode()
             js_bg_value = f"data:image/png;base64,{bg_b64}"
             js_bg_type = "image"
