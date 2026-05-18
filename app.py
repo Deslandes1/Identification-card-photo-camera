@@ -19,6 +19,13 @@ st.markdown("""
     h1, h2, h3, .stMarkdown, .stText {
         color: white !important;
     }
+    /* Strong black text for sidebar title */
+    .black-strong {
+        color: black !important;
+        font-weight: 900 !important;
+        font-size: 1.3rem !important;
+        margin-bottom: 10px;
+    }
     .stButton button {
         background: linear-gradient(90deg, #ff6b6b, #feca57);
         color: white;
@@ -37,14 +44,51 @@ st.markdown("""
     .reportview-container .main .block-container {
         padding-top: 2rem;
     }
+    .white-text {
+        color: white !important;
+        font-weight: normal;
+    }
+    .sidebar-info {
+        background: rgba(255,255,255,0.1);
+        padding: 12px;
+        border-radius: 15px;
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
+    .sidebar-info p {
+        color: white !important;
+        margin: 5px 0;
+    }
+    .sidebar-info a {
+        color: #ffd966 !important;
+        text-decoration: none;
+    }
+    .sidebar-info a:hover {
+        text-decoration: underline;
+    }
+    .pricing-box {
+        background: rgba(0,0,0,0.3);
+        padding: 10px;
+        border-radius: 12px;
+        margin-top: 15px;
+        text-align: center;
+    }
+    .pricing-box h4 {
+        color: #ffd966;
+        margin: 0 0 8px 0;
+    }
+    .pricing-box p {
+        font-size: 0.9rem;
+        margin: 3px 0;
+    }
 </style>
 """, unsafe_allow_html=True)
 
 st.title("📸 ID Photo Studio – Perfect ID Photos")
 st.markdown("Take a photo, then **instantly replace the background** with a colorful style of your choice.")
 
-# Sidebar with background options
-st.sidebar.header("🎨 Background Gallery")
+# Sidebar with background options and personal info
+st.sidebar.markdown('<div class="black-strong">🎨 Background Gallery</div>', unsafe_allow_html=True)
 
 bg_option = st.sidebar.radio(
     "Choose background type",
@@ -82,8 +126,32 @@ else:  # Upload Image
     else:
         bg_color = "#2c3e50"  # fallback
 
+# ========== SIDEBAR PERSONAL INFO & PRICING ==========
+st.sidebar.markdown("---")
+st.sidebar.markdown('<div class="sidebar-info">', unsafe_allow_html=True)
+st.sidebar.markdown("**🌐 GlobalInternet.py**")
+st.sidebar.markdown("**👨‍💻 Software Engineer in Chief**")
+st.sidebar.markdown("**Gesner Deslandes**")
+st.sidebar.markdown("📞 **Phone:** +509 4738-5663")
+st.sidebar.markdown("✉️ **Email:** [deslandes78@gmail.com](mailto:deslandes78@gmail.com)")
+st.sidebar.markdown("🌍 **Website:** [globalinternetsitepy-abh7v6tnmskxxnuplrdcgk.streamlit.app/](https://globalinternetsitepy-abh7v6tnmskxxnuplrdcgk.streamlit.app/)")
+st.sidebar.markdown('</div>', unsafe_allow_html=True)
+
+# Pricing section
+st.sidebar.markdown('<div class="pricing-box">', unsafe_allow_html=True)
+st.sidebar.markdown("<h4>💰 Online Pricing (Competitive)</h4>", unsafe_allow_html=True)
+st.sidebar.markdown("• **Basic ID Photo:** $4.99 / photo")
+st.sidebar.markdown("• **Background Removal Only:** $2.99 / photo")
+st.sidebar.markdown("• **Bulk Discount (10+ photos):** 30% OFF")
+st.sidebar.markdown("• **Custom Background Design:** $9.99 / project")
+st.sidebar.markdown("• **Enterprise API Access:** Contact for quote")
+st.sidebar.markdown("</div>", unsafe_allow_html=True)
+
 # Camera input
 camera_photo = st.camera_input("📷 Take a photo", key="id_photo")
+
+# White text message below camera
+st.markdown('<p class="white-text">Click the camera above to take a photo first.</p>', unsafe_allow_html=True)
 
 # HTML/JS component for background replacement (client-side)
 def background_replacement_js(original_image_b64, bg_type, bg_value):
