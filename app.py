@@ -38,16 +38,11 @@ st.markdown("""
         transform: scale(1.02);
         background: linear-gradient(90deg, #ff8e8e, #ffdd87);
     }
-    .css-1d391kg {
-        background-color: rgba(0,0,0,0.2);
-    }
-    .reportview-container .main .block-container {
-        padding-top: 2rem;
-    }
     .white-text {
         color: white !important;
         font-weight: normal;
     }
+    /* Sidebar info - strong white */
     .sidebar-info {
         background: rgba(255,255,255,0.1);
         padding: 12px;
@@ -55,17 +50,20 @@ st.markdown("""
         margin-top: 20px;
         margin-bottom: 20px;
     }
-    .sidebar-info p {
+    .sidebar-info p, .sidebar-info div, .sidebar-info strong {
         color: white !important;
+        font-weight: bold !important;
         margin: 5px 0;
     }
     .sidebar-info a {
         color: #ffd966 !important;
+        font-weight: bold !important;
         text-decoration: none;
     }
     .sidebar-info a:hover {
         text-decoration: underline;
     }
+    /* Pricing box - strong white */
     .pricing-box {
         background: rgba(0,0,0,0.3);
         padding: 10px;
@@ -73,9 +71,14 @@ st.markdown("""
         margin-top: 15px;
         text-align: center;
     }
+    .pricing-box h4, .pricing-box p, .pricing-box li {
+        color: white !important;
+        font-weight: bold !important;
+    }
     .pricing-box h4 {
         color: #ffd966;
         margin: 0 0 8px 0;
+        font-weight: bold;
     }
     .pricing-box p {
         font-size: 0.9rem;
@@ -126,18 +129,18 @@ else:  # Upload Image
     else:
         bg_color = "#2c3e50"  # fallback
 
-# ========== SIDEBAR PERSONAL INFO & PRICING ==========
+# ========== SIDEBAR PERSONAL INFO & PRICING (STRONG WHITE) ==========
 st.sidebar.markdown("---")
 st.sidebar.markdown('<div class="sidebar-info">', unsafe_allow_html=True)
 st.sidebar.markdown("**🌐 GlobalInternet.py**")
 st.sidebar.markdown("**👨‍💻 Software Engineer in Chief**")
 st.sidebar.markdown("**Gesner Deslandes**")
-st.sidebar.markdown("📞 **Phone:** +509 4738-5663")
-st.sidebar.markdown("✉️ **Email:** [deslandes78@gmail.com](mailto:deslandes78@gmail.com)")
-st.sidebar.markdown("🌍 **Website:** [globalinternetsitepy-abh7v6tnmskxxnuplrdcgk.streamlit.app/](https://globalinternetsitepy-abh7v6tnmskxxnuplrdcgk.streamlit.app/)")
+st.sidebar.markdown("**📞 Phone:** +509 4738-5663")
+st.sidebar.markdown("**✉️ Email:** [deslandes78@gmail.com](mailto:deslandes78@gmail.com)")
+st.sidebar.markdown("**🌍 Website:** [globalinternetsitepy-abh7v6tnmskxxnuplrdcgk.streamlit.app/](https://globalinternetsitepy-abh7v6tnmskxxnuplrdcgk.streamlit.app/)")
 st.sidebar.markdown('</div>', unsafe_allow_html=True)
 
-# Pricing section
+# Pricing section (strong white)
 st.sidebar.markdown('<div class="pricing-box">', unsafe_allow_html=True)
 st.sidebar.markdown("<h4>💰 Online Pricing (Competitive)</h4>", unsafe_allow_html=True)
 st.sidebar.markdown("• **Basic ID Photo:** $4.99 / photo")
